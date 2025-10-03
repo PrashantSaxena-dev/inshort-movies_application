@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
+import '../viewmodels/search_model.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:dio/dio.dart';
-
 import '../core/network/dio_client.dart';
 import '../data/remote/tmdb_api.dart';
 import '../data/local/movie_local_data_source.dart';
@@ -23,6 +23,8 @@ class AppProviders {
       Provider<MovieLocalDataSource>.value(value: local),
       Provider<MovieRepository>.value(value: movieRepository),
       ChangeNotifierProvider<HomeModel>(create: (_) => HomeModel(movieRepository)),
+      ChangeNotifierProvider<SearchModel>(create: (_) => SearchModel(movieRepository)),
+
     ];
   }
 }
