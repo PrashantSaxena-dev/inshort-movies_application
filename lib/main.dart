@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'ui/screens/home_screen.dart';
+import 'core/network/dio_client.dart';
+import 'data/remote/tmdb_api.dart';
+import 'package:provider/provider.dart';
+import 'providers/app_providers.dart';
 
-void main() {
+void main() async{
+  // WidgetsFlutterBinding.ensureInitialized();
+
+  // final dio = DioClient.create();
+  // final api = TmdbApi(dio);
+
+  // // quick check
+  // final trending = await api.getTrendingMovies();
+  // print(trending.data);
+
   runApp(const MoviesApp());
 }
 
@@ -10,18 +23,17 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Movies App',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return MultiProvider(
+      providers: AppProviders.providers(),
+      child: MaterialApp(
+        title: 'Movies App',
+        theme: ThemeData(useMaterial3: true),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const HomeScreen(),
+        },
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const HomeScreen(),
-        // Details and other routes will be added later
-      },
     );
   }
 }
