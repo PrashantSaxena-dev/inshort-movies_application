@@ -51,7 +51,15 @@ class MovieDetailsScreen extends StatelessWidget {
                   onPressed: () {
                     if (model.movie != null) {
                       final MovieModel m = model.movie!;
-                      final shareText = 'Check this movie: ${m.title}\nmymovies://movie/${m.id}';
+                      final releaseYear = (m.releaseDate != null && m.releaseDate!.isNotEmpty) 
+                          ? ' (${DateTime.tryParse(m.releaseDate!)?.year ?? ''})' 
+                          : '';
+                      final overview = (m.overview != null && m.overview!.isNotEmpty) 
+                          ? '\n${m.overview!.substring(0, m.overview!.length > 100 ? 100 : m.overview!.length)}...' 
+                          : '';
+                      final preUrl = 'https://www.themoviedb.org/movie/';
+                      final shareText = '🎬 ${m.title}$releaseYear${overview}\n\nCheck it out on TMDB:\n${preUrl}${m.id}';
+
                       Share.share(shareText);
                     } else {
                       Share.share('Check this app: MyMoviesApp');
