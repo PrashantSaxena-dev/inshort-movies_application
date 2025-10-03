@@ -1,13 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../data/local/movie_local_data_source.dart';
+import '../../data/models/movie_model.dart';
+import '../widgets/movie_card.dart';
+import 'movie_details_screen.dart';
 
 class BookmarksScreen extends StatelessWidget {
   const BookmarksScreen({super.key});
 
+  void _openDetails(BuildContext context, int movieId) {
+    Navigator.pushNamed(context, MovieDetailsScreen.routeName, arguments: movieId);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final local = Provider.of<MovieLocalDataSource>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Saved Movies')),
-      body: const Center(child: Text('Bookmarks will appear here')),
+      body: ValueListenableBuilder(
+        valueListenable: local.bookmarksListenable(),
+        builder: (context, box, _) {
+          final ids = local.getBookmarkedIds();
+          final movies = local.getMoviesByIds(ids);
+
+          if (movies.isEmpty) {
+            return const Center(child: Text('No saved movies yet.'));
+          }
+
+          return GridView.builder(
+            padding: const EdgeInsets.all(12),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.65,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+            ),
+            itemCount: movies.length,
+            itemBuilder: (context, index) {
+              final m = movies[index];
+              return MovieCard(
+                movie: m,
+                onTap: () => _openDetails(context, m.id),
+                showBookmark: false,
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

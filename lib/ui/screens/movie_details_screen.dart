@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/data/local/movie_local_data_source.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../data/repository/movie_repository.dart';
@@ -26,10 +27,19 @@ class MovieDetailsScreen extends StatelessWidget {
               builder: (context, model, _) {
                 return IconButton(
                   icon: Icon(model.isBookmarked ? Icons.bookmark : Icons.bookmark_border),
-                  onPressed: () {
-                    model.toggleBookmark();
-                    final snack = model.isBookmarked ? 'Bookmarked' : 'Removed bookmark';
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(snack)));
+                  onPressed: () async {
+                    if (model.movie != null) {
+                      final local = Provider.of<MovieLocalDataSource>(context, listen: false);
+                      if (model.isBookmarked) {
+                        await local.unbookmarkMovie(model.movie!.id);
+                      } else {
+                        await local.bookmarkMovie(model.movie!.id);
+                        await local.upsertMovie(model.movie!);
+                      }
+                      model.toggleBookmark();
+                      final snack = model.isBookmarked ? 'Bookmarked' : 'Removed bookmark';
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(snack)));
+                    }
                   },
                 );
               },
