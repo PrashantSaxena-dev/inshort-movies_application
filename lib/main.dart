@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'ui/screens/movie_details_screen.dart';
 import 'ui/screens/home_screen.dart';
-import 'core/network/dio_client.dart';
+import 'ui/screens/bookmarks_screen.dart';
+import 'ui/screens/search_screen.dart';import 'core/network/dio_client.dart';
 import 'data/remote/tmdb_api.dart';
 import 'package:provider/provider.dart';
 import 'providers/app_providers.dart';
@@ -32,6 +34,9 @@ class MoviesApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const HomeScreen(),
+          MovieDetailsScreen.routeName: (context) => const MovieDetailsScreen(),
+          '/bookmarks': (context) => const BookmarksScreen(),
+          '/search': (context) => const SearchScreen(),
         },
       ),
     );
