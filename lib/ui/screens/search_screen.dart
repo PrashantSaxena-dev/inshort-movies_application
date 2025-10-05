@@ -40,8 +40,20 @@ class SearchScreen extends StatelessWidget {
                         },
                       )
                     : null,
+                     focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.deepPurple, // Your desired color when focused
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.circular(10.0),
+    ),
                 border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    OutlineInputBorder(
+                      
+                      borderRadius: BorderRadius.circular(8), borderSide: BorderSide(
+        color: Colors.green, // Your desired color
+        width: 2.0, // Optional: customize border width
+      ),),
               ),
             ),
           ),
