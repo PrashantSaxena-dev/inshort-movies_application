@@ -47,7 +47,12 @@ class _NowPlayingItemState extends State<NowPlayingItem>
           margin: const EdgeInsets.symmetric(horizontal: 12),
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.grey.shade900,
+            gradient: LinearGradient(
+              colors: [Colors.black38, Color(0xFF19062B)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            // color: Color(0xFF19062B),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -73,9 +78,9 @@ class _NowPlayingItemState extends State<NowPlayingItem>
                             fontSize: 16,
                             fontWeight: FontWeight.w700)),
                     const SizedBox(height: 8),
-                    Text(movie.releaseDate ?? '',
+                    Text('(${movie.releaseDate!.split('-')[0]})',
                         style: TextStyle(color: Colors.white70)),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Row(
                       children: [
                         if (movie.voteAverage != null)
@@ -83,7 +88,11 @@ class _NowPlayingItemState extends State<NowPlayingItem>
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: Colors.white24,
+                              // color: Colors.white24,
+                              border: Border.all(
+                                color: Colors.deepPurple, // Color of the border
+                                width: 1.0, // Width of the border
+                              ),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
@@ -103,7 +112,7 @@ class _NowPlayingItemState extends State<NowPlayingItem>
                                 bookmarked
                                     ? Icons.bookmark
                                     : Icons.bookmark_border,
-                                color: Colors.white,
+                                color: Colors.deepPurpleAccent.shade200,
                               ),
                               onPressed: () async {
                                 if (bookmarked) {
