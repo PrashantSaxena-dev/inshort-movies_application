@@ -30,14 +30,16 @@ class MovieDetailsScreen extends StatelessWidget {
             }
             if (model.error != null) {
               return Center(
-                child: Text('Error: ${model.error}', style: const TextStyle(color: Colors.white)),
+                child: Text('Error: ${model.error}',
+                    style: const TextStyle(color: Colors.white)),
               );
             }
 
             final m = model.movie;
             if (m == null) {
               return const Center(
-                child: Text('No details available', style: TextStyle(color: Colors.white70)),
+                child: Text('No details available',
+                    style: TextStyle(color: Colors.white70)),
               );
             }
 
@@ -80,10 +82,12 @@ class MovieDetailsScreen extends StatelessWidget {
                     top: MediaQuery.of(context).size.height * 0.42,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(height: 10),
                         Text(
                           m.title,
                           style: const TextStyle(
@@ -97,20 +101,25 @@ class MovieDetailsScreen extends StatelessWidget {
                           children: [
                             if (m.voteAverage != null)
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  m.voteAverage!.toStringAsFixed(1),
-                                  style: const TextStyle(color: Colors.white),
-                                ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              // color: Colors.white24,
+                              border: Border.all(
+                                color: Colors.deepPurple, // Color of the border
+                                width: 1.0, // Width of the border
                               ),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              m.voteAverage!.toStringAsFixed(1),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
                             const SizedBox(width: 12),
                             if (m.releaseDate != null)
                               Text(
-                                m.releaseDate!,
+                                '(${m.releaseDate!.split('-')[0]})',
                                 style: const TextStyle(color: Colors.white70),
                               ),
                           ],
@@ -185,7 +194,8 @@ class MovieDetailsScreen extends StatelessWidget {
                                         m.overview!.isNotEmpty)
                                     ? '\n${m.overview!.substring(0, m.overview!.length > 100 ? 100 : m.overview!.length)}...'
                                     : '';
-                                final preUrl = 'https://www.themoviedb.org/movie/';
+                                final preUrl =
+                                    'https://www.themoviedb.org/movie/';
                                 final shareText =
                                     '🎬 ${m.title}$releaseYear$overview\n\nCheck it out on TMDB:\n${preUrl}${m.id}';
                                 Share.share(shareText);

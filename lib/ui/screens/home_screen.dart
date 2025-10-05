@@ -133,26 +133,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            Text(
-                                              '(${m.releaseDate!})',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 15,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 6,
+                                                      vertical: 3),
+                                                  decoration: BoxDecoration(
+                                                    // color: Colors.white24,
+                                                    border: Border.all(
+                                                      color: Colors
+                                                          .deepPurple, // Color of the border
+                                                      width:
+                                                          1.0, // Width of the border
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            6),
+                                                  ),
+                                                  child: Text(
+                                                    m.voteAverage!
+                                                        .toStringAsFixed(1),
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 20),
+                                                Text(
+                                                  '(${m.releaseDate!.split('-')[0]})',
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 15,
+                                                    // fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            const SizedBox(height: 8),
-                                            // ElevatedButton(
-                                            //   onPressed: () => _openDetails(context, m),
-                                            //   style: ElevatedButton.styleFrom(
-                                            //     backgroundColor: Colors.white24,
-                                            //     shape: RoundedRectangleBorder(
-                                            //       borderRadius: BorderRadius.circular(8),
-                                            //     ),
-                                            //   ),
-                                            //   child: const Text('Details'),
-                                            // ),
-                                            const SizedBox(height: 12),
+                                            const SizedBox(height: 20),
                                           ],
                                         ),
                                       ),
@@ -244,8 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         borderRadius: BorderRadius.circular(4),
                                         boxShadow: [
                                           BoxShadow(
-                                            color:
-                                                Colors.white.withOpacity(0.4),
+                                            color: Colors.purple,
                                             blurRadius: 6,
                                             spreadRadius: 1,
                                           )
@@ -325,13 +342,13 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 16,
             bottom: 16,
             child: FloatingActionButton(
-              backgroundColor: Colors.white12,
+              backgroundColor: Colors.black54,
               onPressed: () {
                 _scrollController.animateTo(0,
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut);
               },
-              child: const Icon(Icons.arrow_upward, color: Colors.white),
+              child: const Icon(Icons.arrow_upward_sharp, color: Colors.white),
             ),
           ),
         ],
