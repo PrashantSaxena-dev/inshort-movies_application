@@ -88,7 +88,11 @@ class _MoviesAppState extends State<MoviesApp> {
       child: MaterialApp(
         navigatorKey: navigatorKey,
         title: 'Movies App',
-        theme: ThemeData(useMaterial3: true),
+        theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: Colors.black,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, brightness: Brightness.dark),
+        ),
+
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {

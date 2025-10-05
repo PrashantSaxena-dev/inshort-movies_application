@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../data/local/movie_local_data_source.dart';
-import '../../data/models/movie_model.dart';
-import '../widgets/movie_card.dart';
+import '../widgets/now_playing_item.dart';
 import 'movie_details_screen.dart';
 
 class BookmarksScreen extends StatelessWidget {
   const BookmarksScreen({super.key});
 
   void _openDetails(BuildContext context, int movieId) {
-    Navigator.pushNamed(context, MovieDetailsScreen.routeName, arguments: movieId);
+    Navigator.pushNamed(context, MovieDetailsScreen.routeName,
+        arguments: movieId);
   }
 
   @override
@@ -28,21 +28,15 @@ class BookmarksScreen extends StatelessWidget {
             return const Center(child: Text('No saved movies yet.'));
           }
 
-          return GridView.builder(
-            padding: const EdgeInsets.all(12),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.65,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-            ),
+          return ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             itemCount: movies.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
               final m = movies[index];
-              return MovieCard(
+              return NowPlayingItem(
                 movie: m,
                 onTap: () => _openDetails(context, m.id),
-                showBookmark: false,
               );
             },
           );

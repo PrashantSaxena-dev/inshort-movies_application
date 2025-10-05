@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../viewmodels/search_model.dart';
-import '../../data/models/movie_model.dart';
-import '../widgets/movie_card.dart';
+import '../widgets/now_playing_item.dart';
 import 'movie_details_screen.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
   void _openDetails(BuildContext context, int movieId) {
-    Navigator.pushNamed(context, MovieDetailsScreen.routeName, arguments: movieId);
+    Navigator.pushNamed(context, MovieDetailsScreen.routeName,
+        arguments: movieId);
   }
 
   @override
@@ -40,12 +40,35 @@ class SearchScreen extends StatelessWidget {
                         },
                       )
                     : null,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                     focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.deepPurple, // Your desired color when focused
+        width: 2.0,
+      ),
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+                border:
+                    OutlineInputBorder(
+                      
+                      borderRadius: BorderRadius.circular(8), borderSide: BorderSide(
+        color: Colors.green, // Your desired color
+        width: 2.0, // Optional: customize border width
+      ),),
               ),
             ),
           ),
           Expanded(
             child: Builder(builder: (context) {
+              final query = searchModel.controller.text.trim();
+
+              if (query.isEmpty) {
+                return const Center(
+                  child: Text(
+                    'Start typing to search movies...',
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
+                );
+              }
               if (searchModel.loading) {
                 return const Center(child: CircularProgressIndicator());
               }
@@ -56,17 +79,19 @@ class SearchScreen extends StatelessWidget {
                 return const Center(child: Text('No results'));
               }
               return ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                itemCount: searchModel.results.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 8),
                 itemBuilder: (context, index) {
-                  final MovieModel m = searchModel.results[index];
-                  return MovieCard(
+                  final m = searchModel.results[index];
+                  return NowPlayingItem(
                     movie: m,
                     onTap: () => _openDetails(context, m.id),
-                    onBookmarkTap: () {},
                   );
                 },
-                separatorBuilder: (_, __) => const SizedBox(height: 8),
-                itemCount: searchModel.results.length,
               );
             }),
           ),
